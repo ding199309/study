@@ -13,6 +13,7 @@ public class BaseController {
     @RequestMapping("/")
     @ResponseBody
     String home() {
+    	
         return "Hello World!";
         
     }
