@@ -13,7 +13,7 @@ public class BaseController {
     @RequestMapping("/")
     @ResponseBody
     String home() {
-    	
+    	System.out.println(111);
         return "Hello World!";
         
     }
