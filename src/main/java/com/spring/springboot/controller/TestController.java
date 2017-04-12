@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.spring.springboot.model.User;
 import com.spring.springboot.service.UserService;
 
@@ -39,5 +41,11 @@ public class TestController {
 		User user=userService.findByName(name);
 		rsp.getWriter().print(user);
 	}
+	
+	@RequestMapping("/")
+    @ResponseBody
+    String home() {
+        return "Hello World!";
+    }
 }
   
