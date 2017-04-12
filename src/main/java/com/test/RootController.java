@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @EnableAutoConfiguration
-public class BaseController {
+public class RootController {
 
     @RequestMapping("/")
     @ResponseBody
@@ -17,6 +17,6 @@ public class BaseController {
     }
 
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(BaseController.class, args);
+        SpringApplication.run(RootController.class, args);
     }
 }
