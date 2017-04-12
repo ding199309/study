@@ -39,6 +39,9 @@ public class TestController {
 	@RequestMapping("/test")
 	public void  select(HttpServletResponse rsp,@RequestParam(name="name",required=true)String name) throws IOException{
 		User user=userService.findByName(name);
+		
+		rsp.setContentType("text/html;UTF-8");
+		rsp.setCharacterEncoding("UTF-8");
 		rsp.getWriter().print(user);
 	}
 	

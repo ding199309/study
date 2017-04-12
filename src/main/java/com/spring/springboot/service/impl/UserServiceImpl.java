@@ -47,8 +47,8 @@ public class UserServiceImpl  implements UserService{
 	 * Date:2017年4月12日下午3:29:55 
 	 * @since JDK 1.8
 	 */
-	public User  findByName(String name){
-			User user=userMapper.findByName(name);
+	public User  findByName(String userName){
+			User user=userMapper.findByName(userName);
 			City city=cityMapper.findByName("河南");
 			if(user!=null){
 				user.setCity(city);
