@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.test</groupId>
-  <artifactId>springboot-git</artifactId>
+  <artifactId>springboot-learn-demo1</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>springboot-learn-demo1::实现多数据源</name>
