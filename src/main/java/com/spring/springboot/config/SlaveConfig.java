@@ -37,20 +37,20 @@ public class SlaveConfig {
 	static final String  path="com.spring.springboot.dao.slave";
 	static final String location="classpath:mapper/slave/*.xml";
 
-	  @Value("${cluster.datasource.url}")
+	  @Value("${slave.datasource.url}")
 	    private String url;
 
-	    @Value("${cluster.datasource.username}")
+	    @Value("${slave.datasource.username}")
 	    private String user;
 
-	    @Value("${cluster.datasource.password}")
+	    @Value("${slave.datasource.password}")
 	    private String password;
 
-	    @Value("${cluster.datasource.driverClassName}")
+	    @Value("${slave.datasource.driverClassName}")
 	    private String driverClass;
 
-	    @Bean(name = "clusterDataSource")
-	    public DataSource clusterDataSource() {
+	    @Bean(name = "slaveDataSource")
+	    public DataSource slaveDataSource() {
 	        DruidDataSource dataSource = new DruidDataSource();
 	        dataSource.setDriverClassName(driverClass);
 	        dataSource.setUrl(url);
@@ -60,13 +60,13 @@ public class SlaveConfig {
 	    }
 	    @Bean(name = "clusterTransactionManager")
 	    public DataSourceTransactionManager clusterTransactionManager() {
-	        return new DataSourceTransactionManager(clusterDataSource());
+	        return new DataSourceTransactionManager(slaveDataSource());
 	    }
 	    @Bean(name = "clusterSqlSessionFactory")
-	    public SqlSessionFactory clusterSqlSessionFactory(@Qualifier("clusterDataSource") DataSource clusterDataSource)
+	    public SqlSessionFactory clusterSqlSessionFactory(@Qualifier("slaveDataSource") DataSource slaveDataSource)
 	            throws Exception {
 	        final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-	        sessionFactory.setDataSource(clusterDataSource);
+	        sessionFactory.setDataSource(slaveDataSource);
 	        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()
 	                .getResources(SlaveConfig.location));
 	        return sessionFactory.getObject();
