@@ -40,7 +40,7 @@ public class TestController {
 	public void  select(HttpServletResponse rsp,@RequestParam(name="name",required=true)String name) throws IOException{
 		User user=userService.findByName(name);
 		
-		rsp.setContentType("text/html;UTF-8");
+		rsp.setContentType("text/html;charset=utf-8");
 		rsp.setCharacterEncoding("UTF-8");
 		rsp.getWriter().print(user);
 	}
