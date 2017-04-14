@@ -47,7 +47,7 @@ public class TestController {
 	
 	@RequestMapping("/")
     @ResponseBody
-    String home() {
+    String home() { 
         return "Hello World!";
     }
 }
