@@ -17,20 +17,21 @@ import org.springframework.stereotype.Controller;
  * @copyright Anymusic Ltd.
  */
 
-//  继承SpringBootServletInitializer   主要是用于发布到tomcat中
 @SpringBootApplication
-public class RootController  extends SpringBootServletInitializer {
+public class RootController{
 
 
-	/*
-	 * 使用@SpringBootApplication注解。但是如果war包发布至tomcat，需要增加 SpringBootServletInitializer 子类，
-	 * 并覆盖它的 configure 方法，或者直接将main函数所在的类继承 SpringBootServletInitializer 子类，并覆盖它的 configure 方法。
-	 */
-	@Override
-    protected SpringApplicationBuilder configure(
-            SpringApplicationBuilder application) {
-        return application.sources(RootController.class);
-    }
+//  继承SpringBootServletInitializer   主要是用于发布到tomcat中
+//public class RootController  extends SpringBootServletInitializer {
+	
+// 使用@SpringBootApplication注解。但是如果war包发布至tomcat，需要增加 SpringBootServletInitializer 子类，
+// 并覆盖它的 configure 方法，或者直接将main函数所在的类继承 SpringBootServletInitializer 子类，并覆盖它的 configure 方法。
+	
+//	@Override
+//    protected SpringApplicationBuilder configure(
+//            SpringApplicationBuilder application) {
+//        return application.sources(RootController.class);
+//    }
 	
 	
 	
@@ -39,3 +40,21 @@ public class RootController  extends SpringBootServletInitializer {
         SpringApplication.run(RootController.class, args);
     }
 }
+
+/**
+ *  注解：    
+ *   1：发布到tomcat中，首先要变项目为war包，但是如果war包发布至tomcat，需要增加 SpringBootServletInitializer 子类，
+ *	  并覆盖它的 configure 方法，或者直接将main函数所在的类继承 SpringBootServletInitializer 子类，并覆盖它的 configure 方法
+ *	 2：更改pom.xml，修改 Spring Boot Web 依赖下的排除自身所带的tomcat
+ */
+
+
+
+
+
+
+
+
+
+
+
