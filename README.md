@@ -11,8 +11,8 @@
 
 
 *[百度一下](https://www.baidu.com)
-*[谷歌一下](https://www/google.com)
-*[自己的git](https://github.com/ding199309)
+*[谷歌一下](https://www.google.com)
+*[自己的git](https://www.github.com/ding199309)
 
 [百度]:https://www.baidu.com "百度"
 
