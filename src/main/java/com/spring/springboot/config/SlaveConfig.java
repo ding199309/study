@@ -9,7 +9,11 @@
   
 package com.spring.springboot.config;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
+
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -20,6 +24,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import com.alibaba.druid.pool.DruidDataSource;
+import com.github.pagehelper.PageHelper;
 
 /** 
  * ClassName:SlaveConfig <br/> 
@@ -50,6 +55,48 @@ public class SlaveConfig {
 	    @Value("${slave.datasource.driverClassName}")
 	    private String driverClass;
 
+	    @Value("${share.datasource.initialSize}")
+	    private int initialSize;
+
+	    @Value("${share.datasource.minIdle}")
+	    private int minIdle;
+
+	    @Value("${share.datasource.maxActive}")
+	    private int maxActive;
+
+	    @Value("${share.datasource.maxWait}")
+	    private int maxWait;
+
+	    @Value("${share.datasource.timeBetweenEvictionRunsMillis}")
+	    private int timeBetweenEvictionRunsMillis;
+
+	    @Value("${share.datasource.minEvictableIdleTimeMillis}")
+	    private int minEvictableIdleTimeMillis;
+
+	    @Value("${share.datasource.validationQuery}")
+	    private String validationQuery;
+
+	    @Value("${share.datasource.testWhileIdle}")
+	    private boolean testWhileIdle;
+
+	    @Value("${share.datasource.testOnBorrow}")
+	    private boolean testOnBorrow;
+
+	    @Value("${share.datasource.testOnReturn}")
+	    private boolean testOnReturn;
+
+	    @Value("${share.datasource.poolPreparedStatements}")
+	    private boolean poolPreparedStatements;
+
+	    @Value("${share.datasource.maxPoolPreparedStatementPerConnectionSize}")
+	    private int maxPoolPreparedStatementPerConnectionSize;
+
+	    @Value("${share.datasource.filters}")
+	    private String filters;
+
+	    @Value("{share.datasource.connectionProperties}")
+	    private String connectionProperties;
+	 	    
 	    @Bean(name = "slaveDataSource")
 	    public DataSource slaveDataSource() {
 	        DruidDataSource dataSource = new DruidDataSource();
@@ -57,6 +104,19 @@ public class SlaveConfig {
 	        dataSource.setUrl(url);
 	        dataSource.setUsername(user);
 	        dataSource.setPassword(password);
+	        //configuration
+	        dataSource.setInitialSize(initialSize);
+	        dataSource.setMinIdle(minIdle);
+	        dataSource.setMaxActive(maxActive);
+	        dataSource.setMaxWait(maxWait);
+	        dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+	        dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+	        dataSource.setValidationQuery(validationQuery);
+	        dataSource.setTestWhileIdle(testWhileIdle);
+	        dataSource.setTestOnBorrow(testOnBorrow);
+	        dataSource.setTestOnReturn(testOnReturn);
+	        dataSource.setPoolPreparedStatements(poolPreparedStatements);
+	        dataSource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
 	        return dataSource;
 	    }
 	    @Bean(name = "clusterTransactionManager")
@@ -68,6 +128,16 @@ public class SlaveConfig {
 	            throws Exception {
 	        final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 	        sessionFactory.setDataSource(slaveDataSource);
+	        // 分页插件 
+	        PageHelper pageHelper = new PageHelper(); 
+	        Properties properties = new Properties(); 
+	        properties.setProperty("reasonable", "true"); 
+	        properties.setProperty("supportMethodsArguments", "true"); 
+	        properties.setProperty("returnPageInfo", "check"); 
+	        properties.setProperty("params", "count=countSql"); 
+	        pageHelper.setProperties(properties);
+	        //添加插件
+	        sessionFactory.setPlugins(new Interceptor[]{pageHelper});	        
 	        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()
 	                .getResources(SlaveConfig.location));
 	        return sessionFactory.getObject();

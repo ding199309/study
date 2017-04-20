@@ -19,5 +19,13 @@
 		from user
 		where user_name = #{username}
 	</select>
+	
+	<select  id="findByDescription" parameterType="string" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where description = #{description}
+		
+	</select>
 
 </mapper>

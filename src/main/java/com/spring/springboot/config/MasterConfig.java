@@ -9,13 +9,17 @@
   
 package com.spring.springboot.config;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -23,6 +27,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.github.pagehelper.PageHelper;
 
 /** 
  * ClassName:MainConfig <br/> 
@@ -57,46 +62,46 @@ public class MasterConfig {
     @Value("${master.datasource.driverClassName}")
     private String driverClass;
     
-    @Value("${master.datasource.initialSize}")
+    @Value("${share.datasource.initialSize}")
     private int initialSize;
 
-    @Value("${master.datasource.minIdle}")
+    @Value("${share.datasource.minIdle}")
     private int minIdle;
 
-    @Value("${master.datasource.maxActive}")
+    @Value("${share.datasource.maxActive}")
     private int maxActive;
 
-    @Value("${master.datasource.maxWait}")
+    @Value("${share.datasource.maxWait}")
     private int maxWait;
 
-    @Value("${master.datasource.timeBetweenEvictionRunsMillis}")
+    @Value("${share.datasource.timeBetweenEvictionRunsMillis}")
     private int timeBetweenEvictionRunsMillis;
 
-    @Value("${master.datasource.minEvictableIdleTimeMillis}")
+    @Value("${share.datasource.minEvictableIdleTimeMillis}")
     private int minEvictableIdleTimeMillis;
 
-    @Value("${master.datasource.validationQuery}")
+    @Value("${share.datasource.validationQuery}")
     private String validationQuery;
 
-    @Value("${master.datasource.testWhileIdle}")
+    @Value("${share.datasource.testWhileIdle}")
     private boolean testWhileIdle;
 
-    @Value("${master.datasource.testOnBorrow}")
+    @Value("${share.datasource.testOnBorrow}")
     private boolean testOnBorrow;
 
-    @Value("${master.datasource.testOnReturn}")
+    @Value("${share.datasource.testOnReturn}")
     private boolean testOnReturn;
 
-    @Value("${master.datasource.poolPreparedStatements}")
+    @Value("${share.datasource.poolPreparedStatements}")
     private boolean poolPreparedStatements;
 
-    @Value("${master.datasource.maxPoolPreparedStatementPerConnectionSize}")
+    @Value("${share.datasource.maxPoolPreparedStatementPerConnectionSize}")
     private int maxPoolPreparedStatementPerConnectionSize;
 
-    @Value("${master.datasource.filters}")
+    @Value("${share.datasource.filters}")
     private String filters;
 
-    @Value("{master.datasource.connectionProperties}")
+    @Value("{share.datasource.connectionProperties}")
     private String connectionProperties;
     
     
@@ -108,7 +113,6 @@ public class MasterConfig {
         dataSource.setUrl(url);
         dataSource.setUsername(user);
         dataSource.setPassword(password);
-        
       //configuration
         dataSource.setInitialSize(initialSize);
         dataSource.setMinIdle(minIdle);
@@ -137,6 +141,18 @@ public class MasterConfig {
             throws Exception {
         final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(masterDataSource);
+        
+        // 分页插件 
+        PageHelper pageHelper = new PageHelper(); 
+        Properties properties = new Properties(); 
+        properties.setProperty("reasonable", "true"); 
+        properties.setProperty("supportMethodsArguments", "true"); 
+        properties.setProperty("returnPageInfo", "check"); 
+        properties.setProperty("params", "count=countSql"); 
+        pageHelper.setProperties(properties);
+        //添加插件
+        sessionFactory.setPlugins(new Interceptor[]{pageHelper});
+        
         sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver()
                 .getResources(MasterConfig.location));
         return sessionFactory.getObject();

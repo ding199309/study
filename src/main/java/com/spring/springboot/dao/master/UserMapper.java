@@ -9,6 +9,8 @@
   
 package com.spring.springboot.dao.master;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,5 +37,8 @@ public interface UserMapper {
      * @return
      */
     User findByName(String userName);
+    
+    
+    List<User> findByDescription(String description);
 }
   

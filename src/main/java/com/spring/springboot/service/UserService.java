@@ -9,6 +9,7 @@
   
 package com.spring.springboot.service;
 
+import com.github.pagehelper.PageInfo;
 import com.spring.springboot.model.User;
 
 /** 
@@ -33,5 +34,8 @@ public interface UserService {
 	 * @since JDK 1.8
 	 */
 	User  findByName(String name);
+	
+	
+	PageInfo<User> findByDescription(String description);
 }
   

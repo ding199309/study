@@ -9,10 +9,14 @@
   
 package com.spring.springboot.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.spring.springboot.dao.master.UserMapper;
 import com.spring.springboot.dao.slave.CityMapper;
 import com.spring.springboot.model.City;
@@ -56,5 +60,14 @@ public class UserServiceImpl  implements UserService{
 		return user;
 	}
 
+
+	@Override
+	public PageInfo<User> findByDescription(String description) {
+		PageHelper.startPage(1,3);
+		List<User> list=userMapper.findByDescription(description);		
+		return new PageInfo<User>(list);
+	}
+
+	
 }
   

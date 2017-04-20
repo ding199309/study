@@ -10,6 +10,8 @@
 package com.spring.springboot.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
 import com.spring.springboot.model.User;
 import com.spring.springboot.service.UserService;
 
@@ -42,6 +45,12 @@ public class TestController {
 		
 		rsp.setContentType("text/html;charset=utf-8");
 		rsp.setCharacterEncoding("UTF-8");
+		
+		PageInfo<User> page=userService.findByDescription("a");
+		List<User> list=page.getList();
+		for(User users:list){
+			System.out.println(users.getUserName());
+		}
 		rsp.getWriter().print(user);
 	}
 	
