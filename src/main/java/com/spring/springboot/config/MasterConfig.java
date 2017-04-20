@@ -57,6 +57,49 @@ public class MasterConfig {
     @Value("${master.datasource.driverClassName}")
     private String driverClass;
     
+    @Value("${master.datasource.initialSize}")
+    private int initialSize;
+
+    @Value("${master.datasource.minIdle}")
+    private int minIdle;
+
+    @Value("${master.datasource.maxActive}")
+    private int maxActive;
+
+    @Value("${master.datasource.maxWait}")
+    private int maxWait;
+
+    @Value("${master.datasource.timeBetweenEvictionRunsMillis}")
+    private int timeBetweenEvictionRunsMillis;
+
+    @Value("${master.datasource.minEvictableIdleTimeMillis}")
+    private int minEvictableIdleTimeMillis;
+
+    @Value("${master.datasource.validationQuery}")
+    private String validationQuery;
+
+    @Value("${master.datasource.testWhileIdle}")
+    private boolean testWhileIdle;
+
+    @Value("${master.datasource.testOnBorrow}")
+    private boolean testOnBorrow;
+
+    @Value("${master.datasource.testOnReturn}")
+    private boolean testOnReturn;
+
+    @Value("${master.datasource.poolPreparedStatements}")
+    private boolean poolPreparedStatements;
+
+    @Value("${master.datasource.maxPoolPreparedStatementPerConnectionSize}")
+    private int maxPoolPreparedStatementPerConnectionSize;
+
+    @Value("${master.datasource.filters}")
+    private String filters;
+
+    @Value("{master.datasource.connectionProperties}")
+    private String connectionProperties;
+    
+    
     @Bean(name = "masterDataSource")
     @Primary //以此为主
     public DataSource masterDataSource() {
@@ -65,6 +108,20 @@ public class MasterConfig {
         dataSource.setUrl(url);
         dataSource.setUsername(user);
         dataSource.setPassword(password);
+        
+      //configuration
+        dataSource.setInitialSize(initialSize);
+        dataSource.setMinIdle(minIdle);
+        dataSource.setMaxActive(maxActive);
+        dataSource.setMaxWait(maxWait);
+        dataSource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+        dataSource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+        dataSource.setValidationQuery(validationQuery);
+        dataSource.setTestWhileIdle(testWhileIdle);
+        dataSource.setTestOnBorrow(testOnBorrow);
+        dataSource.setTestOnReturn(testOnReturn);
+        dataSource.setPoolPreparedStatements(poolPreparedStatements);
+        dataSource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
         return dataSource;
     }
     
