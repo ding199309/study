@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import com.alibaba.druid.pool.DruidDataSource;
@@ -38,6 +39,8 @@ import com.github.pagehelper.PageHelper;
  */
 @Configuration
 @MapperScan(basePackages=SlaveConfig.path,sqlSessionFactoryRef="clusterSqlSessionFactory")
+
+@PropertySource(encoding="UTF-8", value="classpath:test.properties" )
 public class SlaveConfig {
 	// 精确到 slave 目录，以便跟其他数据源隔离
 	static final String  path="com.spring.springboot.dao.slave";

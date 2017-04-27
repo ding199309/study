@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
-
-
 /**
  * 
  * 文件名称为：RootController.java
@@ -18,8 +18,11 @@ import org.springframework.stereotype.Controller;
  * @copyright Anymusic Ltd.
  */
 
-@SpringBootApplication
+//@SpringBootApplication
 @ServletComponentScan   //扫描Servlet 
+@Configuration
+@EnableAutoConfiguration
+@ComponentScan
 public class RootController{
 
 
